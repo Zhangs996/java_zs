@@ -1,0 +1,22 @@
+1.集合Collection中存储的如果是自定义类的对象，需要自定义类重写哪个方法？为什么？
+equals()方法。  contains() /remove()/retainsAll() ….
+List：equals()方法
+Set：(HashSet、LinkedHashSet为例)：equals()、hashCode()
+     (TreeSet为例)：Comparable：compareTo(Object obj)
+						 Comparator：compare(Object o1,Object o2)
+2.ArrayList,LinkedList,Vector三者的相同点与不同点？【面试题】
+List  Map  Set
+
+3.List 接口的常用方法有哪些？(增、删、改、查、插、长度、遍历)
+add(Object obj)
+remove(Object obj)/remove(int index)
+set(int index,Object obj)
+get(int index)
+add(int index,Object obj)
+size()
+使用Iterator;foreach;普通的for
+4.如何使用Iterator和增强for循环遍历List。举例说明
+
+5.Set存储数据的特点是什么？常见的实现类有什么？说明一下彼此的特点。
+HashSet  LinkedHashSet  TreeSet
+HashMap    LinkedHashMap   TreeMap

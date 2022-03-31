@@ -1,0 +1,7 @@
+要求TreeMap的key是同一种对象，因为要用key排序
+TreeMap存储Key-Value 对时，需要根据key-value对进行排序。TreeMap可以保证所有的Key-Value 对处于有序状态。
+TreeSet底层使用红黑树结构存储数据
+TreeMap的Key的排序：
+自然排序：TreeMap的所有的Key 必须实现Comparable接口，而且所有的Key应该是同一个类的对象，否则将会抛出ClasssCastException
+定制排序：创建TreeMap时，传入一个Comparator 对象，该对象负责对TreeMap中的所有key 进行排序。此时不需要Map 的Key实现Comparable 接口
+TreeMap判断两个key相等的标准：两个key通过compareTo()方法或者compare()方法返回0。

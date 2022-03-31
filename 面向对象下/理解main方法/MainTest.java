@@ -1,5 +1,7 @@
 package 面向对象下.理解main方法;
 
+import java.util.Scanner;
+
 /*
  * main()方法的使用说明
  * 1.main()方法作为程序的入口;
@@ -28,10 +30,15 @@ public class MainTest {
 
 class Main{
     public static void main(String[] args) {
-        args = new String[100];
-        for(int i = 0;i < args.length;i++){
-            args[i] = "args_" + i;
-            System.out.println(args[i]);
-        }
+//        args = new String[100];
+//        for(int i = 0;i < args.length;i++){
+//            args[i] = "args_" + i;
+//            System.out.println(args[i]);
+//        }
+        Scanner scanner = new Scanner(System.in);
+        if(scanner.hasNextInt()){
+                int t = scanner.nextInt();
+            }
+
     }
 }

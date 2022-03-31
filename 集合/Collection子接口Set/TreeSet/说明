@@ -1,0 +1,27 @@
+TreeSet是SortedSet接口的实现类，TreeSet可以确保集合元素处于排序状态。
+TreeSet底层使用红黑树结构存储数据
+新增的方法如下：(了解)
+Comparator comparator()
+Object first()
+Object last()
+Object lower(Object e)
+Object higher(Object e)
+SortedSet subSet(fromElement, toElement)
+SortedSet headSet(toElement)
+SortedSet tailSet(fromElement)
+TreeSet两种排序方法：自然排序和定制排序。默认情况下，TreeSet采用自然排序。
+TreeSet和后面要讲的TreeMap采用红黑树的存储结构
+特点：有序，查询速度比List快
+自然排序：TreeSet会调用集合元素的compareTo(Object obj)方法来比较元素之间的大小关系，然后将集合元素按升序(默认情况)排列。
+如果试图把一个对象添加到TreeSet时，则该对象的类必须实现Comparable 接口。
+实现Comparable 的类必须实现compareTo(Object obj)方法，两个对象即通过compareTo(Object obj)方法的返回值来比较大小。
+Comparable 的典型实现：
+BigDecimal、BigInteger以及所有的数值型对应的包装类：按它们对应的数值大小进行比较
+Character：按字符的unicode值来进行比较
+Boolean：true 对应的包装类实例大于false 对应的包装类实例
+String：按字符串中字符的unicode 值进行比较
+Date、Time：后边的时间、日期比前面的时间、日期大
+向TreeSet中添加元素时，只有第一个元素无须比较compareTo()方法，后面添加的所有元素都会调用compareTo()方法进行比较。
+因为只有相同类的两个实例才会比较大小，所以向TreeSet中添加的应该是同一个类的对象。
+对于TreeSet集合而言，它判断两个对象是否相等的唯一标准是：两个对象通过compareTo(Object obj)方法比较返回值。
+当需要把一个对象放入TreeSet中，重写该对象对应的equals()方法时，应保证该方法与compareTo(Object obj) 方法有一致的结果：如果两个对象通过equals()方法比较返回true，则通过compareTo(Object obj)方法比较应返回0。否则，让人难以理解。

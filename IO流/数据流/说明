@@ -1,0 +1,13 @@
+为了方便地操作Java语言的基本数据类型和String的数据，可以使用数据流。
+
+数据流有两个类：(用于读取和写出基本数据类型、String类的数据）
+
+DataInputStream和DataOutputStream
+分别“套接”在InputStream和OutputStream子类的流上
+DataInputStream中的方法
+
+boolean readBoolean()	byte readByte()
+char readChar()	float readFloat()
+double readDouble()	short readShort()
+long readLong()	int readInt()
+String readUTF()	void readFully(byte[s] b)

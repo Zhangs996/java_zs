@@ -1,0 +1,21 @@
+1.建立一个流对象，将已存在的一个文件加载进流。
+FileReaderfr= new FileReader(new File(“Test.txt”));
+
+2.创建一个临时存放数据的数组。
+char[] ch= new char[1024];
+
+3.调用流对象的读取方法将流中的数据读入到数组中。
+fr.read(ch);
+
+4.关闭资源。
+fr.close();
+
+
+1.创建流对象，建立数据存放文件
+  FileWriterfw= new FileWriter(new File(“Test.txt”));
+    
+2.调用流对象的写入方法，将数据写入流
+  fw.write(“atguigu-songhongkang”);
+  
+3.关闭流资源，并将流中的数据清空到文件中。
+  fw.close();

@@ -1,0 +1,124 @@
+1.如何实现向下转型？需要注意什么问题？如何解决此问题
+Person p = New Man()；
+使用强转符:
+Man m = (Man)p;
+
+强转时可能ClassCastException异常。如何解决？
+使用instanceof在进行向下转型前判断。
+if(p instanceof Man){}
+
+2.==和equals()有何区别?
+ 一、回顾==的使用
+== : 运算符
+1.可以使用在基本数据类型变量和引用数据类型变量中
+2.如果比较的是基本数据类型变量：比较两个变量保存的数据是否相等。(不一定类型要相同,比如10.0===10，char类型的先转化ascii码再比较，boolean和其他不能用==)
+ 	 如果比较的是引用数据类型变量：比较两个对象的地址值是否相同,即两个引用是否指向同一个对象实体
+     补充: == 符号使用时，必须保证符号左右两边的变量类型一致。
+
+二、equals()方法的使用
+1.是一个方法，而非运算符
+2.只能适用于引用数据类型。
+3.Object类中equals()的定义：
+ 	public boolean equals(Object obj){
+ 			return (this == obj);
+ 		}
+说明：Object类中定义的equals()和==的作用是相同的，比较两个对象的地址值是否相同，即两个引用是否指向同一个对象实体。
+
+4.像String、Date、File、包装类等都重写了Object类中的equals()方法.
+    不是两个引用的地址是否相同，而是比较两个对象的“实体内容”是否相同。
+5.通常情况下，我们自定义的类如果使用equals()的话，也通常是比较两个对象的"实体内容"是否相同。那么，我们
+    就需要对Object类中的equals()进行重写。
+
+重写的原则:比较两个对象的实体内容是否相同。
+3.class User{
+    String name;
+    int age;
+    //重写equals方法
+    public boolean equals(Object obj){
+        if(this==obj){
+            return true;
+        }else if(obj instanceof User){//看obj是不是当前类的一个实例
+            User user = (User)obj;
+            //比较属性内容是否相等，如果this.name == user.name，那么就成了比较地址了，因为String是引用类型
+            return this.age == user.age && this.name.equals(user.name);
+        }return false;
+    }
+}
+4.写出8种基本数据类型和它们的包装类
+int     Integer
+long    Long
+float   Float
+byte    Byte
+char    Character
+double  Double
+short   Short
+boolean Bollean
+5.基本数据类型，包装类，和String之间的相互转换
+基本数据类型<->包装类   自动装箱，拆箱
+包装类->String String str = in1.toStirng(),调用包装类的toString方法，调用包装类的toString(形参)方法
+基本数据类型->String String.valueOf(3.4f)或者3.4+""
+String->基本数据类型 调用相应的包装类的parsexxx(String)静态方法。或者通过包装类构造器: boolean b=new Boolean("true");
+String->包装类Integer in1 = new Integer("10"),Float f1 = new Float("31.12F")
+6.多态性使用的注意点:
+对象的多态性，只适用于方法，不适用于属性（编译和运行都看左边)
+7.关于向上转型与向下转型:
+    7.1向上转型:多态
+    7.2向下转型:
+    7.2.1为什么使用向下转型:
+        有了对象的多态性以后，内存中实际上是加载了子类特有的属性和方法的，但是由于变量声明为父类类型，导致编译时，
+        只能调用父类中声明的属性和方法。子类特有的属性和方法不能调用。如何才能调用子类特的属性和方法?使用向下转型。
+    7.2.2如何实现向下转型:
+    使用强制类型转换符:()
+    7.2.3 使用时的注意点:
+        使用强转时，可能出现classCastException的异常。
+        为了避免在向下转型时出现ClassCastException的异常，我们在向下转型之前，先进行instanceof的判断一旦返回true，就进行向下转型。如果返回false，不进行向下转型。
+    7.2.4 instanceof的使用:
+        a instanceof A:判断对象a是否是类A的实例。如果是，返回true;如果不是，返回false。
+8．面试题:
+    8.1谈谈你对多态性的理解?实现代码的通用性。
+        object类中定义的public boolean equals(object obj){ }
+        JDBC:使用java程序操作(获取数据库连接、CRUD)数据库(MysQL、oracle.DB2、sQL Server)
+        抽象类、接口的使用肯定体现了多态性。（抽象类、接口不能实例化)
+8.2多态是编译时行为还是运行时行为?
+运行
+9.Object类
+Object类只声明了一个空参构造器
+    Object()
+    默认构造方法
+    clone()
+    创建并返回此对象的一个副本。
+    equals(Object obj)
+    指示某个其他对象是否与此对象“相等”。
+    finalize()
+    当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法。
+    getClass()
+    返回一个对象的运行时类。
+    hashCode()
+    返回该对象的哈希码值。
+    notify()
+    唤醒在此对象监视器上等待的单个线程。
+    notifyAll()
+    唤醒在此对象监视器上等待的所有线程。
+    toString()
+    返回该对象的字符串表示。
+    wait()
+    导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法。
+    wait(long timeout)
+    导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量。
+    wait(long timeout, int nanos)
+    导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者其他某个线程中断当前线程，或者已超过某个实际时间量。
+10.单元测试
+Java中的]Unit单元测试*
+
+1.中当前工程–右键择: build path - add libraries - JUnit 4 -下一步
+2.创建]ava类,进行单元测试。
+此时的Java类要求:此类是public的
+                此类提供公共的无参的构造器
+3.此类中声明单元测试方法。
+此时的单元测试方法:方法的权限是public,没返回值，没形参
+4.此单元测试方法上需要声明注解:@Test,并在单元测试类中导入: import org.junit.Test;
+5.声明好单元测试方法以后，就可以在方法体内测试相关的代码。
+6.写完代码以后，左键双击单元测试方法名，右键: run as - JUnit Test
+说明:
+1.如果执行结果没任何异常:绿条*2.如果执行结果出现异常:红条
+

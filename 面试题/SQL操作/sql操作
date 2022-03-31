@@ -1,0 +1,26 @@
+
+SQL查询每门课程最高分学生的学号，课程号，成绩
+
+CREATE TABLE test.student (
+	stuId INT primary key NOT NULL AUTO_INCREMENT,
+	courseId INT NOT NULL,
+	score INT NOT NULL
+);
+insert into test.student values(1,2,98);
+insert into test.student values(6,1,94);
+insert into test.student values(2,2,93);
+insert into test.student values(7,1,98);
+insert into test.student values(3,2,91);
+insert into test.student values(4,1,91);
+insert into test.student values(5,1,92);
+
+select * from test.student s ;
+
+select t1.stuId,t1.CourseId,t1.score
+from test.student t1
+where t1.score = (
+select max(t2.score)
+from test.student t2
+where t2.courseId = t1.courseId
+group by t2.courseId
+);

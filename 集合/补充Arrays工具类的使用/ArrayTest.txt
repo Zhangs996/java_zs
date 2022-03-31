@@ -1,0 +1,61 @@
+package 集合.Java集合框架概述.补充Arrays工具类的使用;
+
+Java中Arrays的工具类
+
+        0.Array.asList
+        List dest = Arrays.asList(new Object[list.size()]);
+        String[] name = new String[n];
+        for(int i = 0; i < n; i++){
+           name[i] = String.valueOf(i);
+        }
+        List<String> list = Arrays.asList(name);
+
+        1.Arrays的遍历输出方法
+        int[] arr = {22,11,66,88,99,44}
+        System.out.println(Arrays.toString(arr));
+
+        2.Arrays的排序方法
+        Arrays.sort(arr);//底层是一个快速排序方法
+        System.out.println(Arrays.toString(arr));
+
+        3.Arrays的二分查找方法
+        //二分查找必须先进行排序，Arrays.sort(arr)；
+        int index = Arrays.binarySearch(arr,88);
+        System.out.println(index);
+
+        4.System.arraycopy()方法 本地方法底层由C语言实现
+        int[] dest = {100,200,300};
+        System.arraycopy(arr,1,dest,0,3);
+        //arr 源数组对象
+        //1 	从源数组中的第几个位置复制，为索引值
+        //dest 目标数组对象
+        //0 	从目标数组中的第几个位置插入，为索引值
+        //3  为源数组的长度
+        5.复制数组
+        int[] newArr = Arrays.copyOf(arr,arr.length);
+        System.out.println(Arrays.toString(newArr));
+
+        6.数组扩容
+        int[] newArr2 = Arrays.copyOf(arr,arr.length+1)
+        System.out.println(Arrays.toString(newArr2));
+
+        7.数组缩容
+        int[] newArr3 = Arrays.copyOf(arr,arr.length-2);
+        System.out.println(Arrays.toString(newArr3));
+
+        8.填充数组
+        Arrays.fill(arr,100);
+        System.out.println(Arrays.toString(arr));
+
+        9.填充数组的一部分 左闭右开原则
+        Arrays.fill(arr,2,4,100);
+        System.out.println(Arrays.toString(arr));
+
+        10.复制数组中的数据 通过索引范围
+        int[] copyArr = Arrays.copyOfRange(arr, 2, 5);
+        System.out.println(Arrays.toString(copyArr));
+
+        11.Arrays.equals()方法判断数组是否相等
+        int[] arr1 = {11, 22, 33, 44};
+        int[] arr2 = {11, 22, 33, 44};
+        System.out.println(Arrays.equals(arr1, arr2));

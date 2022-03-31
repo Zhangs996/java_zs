@@ -1,0 +1,134 @@
+/**
+ * 1. List接口框架
+ *
+ *    |----Collection接口：单列集合，用来存储一个一个的对象
+ *          |----List接口：存储有序的、可重复的数据。  -->“动态”数组,替换原有的数组
+ *              |----ArrayList：作为List接口的主要实现类；线程不安全的，效率高；底层使用Object[] elementData存储
+ *              |----LinkedList：对于频繁的插入、删除操作，使用此类效率比ArrayList高；底层使用双向链表存储
+ *              |----Vector：作为List接口的古老实现类；线程安全的，效率低；底层使用Object[] elementData存储
+ *
+ *
+ * 面试题：比较ArrayList、LinkedList、Vector三者的异同？
+ *        同：三个类都是实现了List接口，存储数据的特点相同：存储有序的、可重复的数据
+ *        不同：见上
+ *
+ */
+ * 2.ArrayList的源码分析：
+ *   2.1 jdk 7情况下
+ *      ArrayList list = new ArrayList();//底层创建了长度是10的Object[]数组,数组名是elementData
+ *      list.add(123);//elementData[0] = new Integer(123);
+ *      ...
+ *      list.add(11);//如果此次的添加导致底层elementData数组容量不够，则扩容。
+ *      默认情况下，扩容为原来的容量的1.5倍，同时需要将原有数组中的数据复制到新的数组中。
+ *
+ *      结论：建议开发中使用带参的构造器：ArrayList list = new ArrayList(int capacity)
+ *
+ *   2.2 jdk 8中ArrayList的变化：
+ *      ArrayList list = new ArrayList();//底层Object[] elementData初始化为{}.并没有创建长度为10的数组
+ *
+ *      list.add(123);//第一次调用add()时，底层才创建了长度10的数组，并将数据123添加到elementData[0]
+ *      ...
+ *      后续的添加和扩容操作与jdk 7 无异。
+ *   2.3 小结：jdk7中的ArrayList的对象的创建类似于单例的饿汉式，而jdk8中的ArrayList的对象
+ *            的创建类似于单例的懒汉式，延迟了数组的创建，节省内存。
+
+ 添加
+ add(Objec tobj)
+ addAll(Collection coll)
+
+ 获取有效元素的个数
+ int size()
+
+ 清空集合
+ void clear()
+
+ 是否是空集合
+ boolean isEmpty()
+
+ 是否包含某个元素
+ boolean contains(Object obj)：是通过元素的equals方法来判断是否是同一个对象
+ boolean containsAll(Collection c)：也是调用元素的equals方法来比较的。拿两个集合的元素挨个比较。
+
+ 删除
+ boolean remove(Object obj) ：通过元素的equals方法判断是否是要删除的那个元素。只会删除找到的第一个元素
+ boolean removeAll(Collection coll)：取当前集合的差集
+
+ 取两个集合的交集
+ boolean retainAll(Collection c)：把交集的结果存在当前集合中，不影响c
+
+ 集合是否相等
+ boolean equals(Object obj)
+
+ 转成对象数组
+ Object[] toArray()
+
+ 获取集合对象的哈希值
+ hashCode()
+
+ 遍历
+ iterator()：返回迭代器对象，用于集合遍历
+
+  * 向Collection接口的实现类的对象中添加数据obj时，要求obj所在类要重写equals().equals()比较的是内容
+  *
+  * Arraylist转Array
+  * Object[] array = coll.toArray(); = arraylist.toArray()
+  * *提取集合的某个对象元素
+  *  *         Object p = array[2];
+  *  *         Person p1 = (Person)p;
+  * Array转List
+  * List list = Arrays.asList(array)
+  *
+  * List转ArrayList
+  *         ArrayList arrayList = new ArrayList();
+  *         for (int i = 0; i < list.size(); i++) {
+  *             arrayList.add(list.get(i));
+  *         }
+
+  *
+
+   * 3.LinkedList的源码分析：
+   *       LinkedList list = new LinkedList(); 内部声明了Node类型的first和last属性，默认值为null
+   *       list.add(123);//将123封装到Node中，创建了Node对象。
+   *
+   *       其中，Node定义为：体现了LinkedList的双向链表的说法
+   *       private static class Node<E> {
+   *            E item;
+   *            Node<E> next;
+   *            Node<E> prev;
+   *
+   *            Node(Node<E> prev, E element, Node<E> next) {
+   *            this.item = element;
+   *            this.next = next;     //next变量记录下一个元素的位置
+   *            this.prev = prev;     //prev变量记录前一个元素的位置
+   *            }
+   *        }
+   */
+   增加：
+   add(E e)：在链表后添加一个元素；   通用方法
+   addFirst(E e)：在链表头部插入一个元素；  特有方法
+   addLast(E e)：在链表尾部添加一个元素；  特有方法
+   push(E e)：与addFirst方法一致
+   offer(E e)：在链表尾部插入一个元素                                                                                                                                                  add(int index, E element)：在指定位置插入一个元素。
+   offerFirst(E e)：JDK1.6版本之后，在头部添加； 特有方法                                                                                                         offerLast(E e)：JDK1.6版本之后，在尾部添加； 特有方法
+
+   删除：
+   remove() ：移除链表中第一个元素;    通用方法
+   remove(E e)：移除指定元素；   通用方法
+   removeFirst(E e)：删除头，获取元素并删除；  特有方法
+   removeLast(E e)：删除尾；  特有方法
+   pollFirst()：删除头；  特有方法
+   pollLast()：删除尾；  特有方法
+   pop()：和removeFirst方法一致，删除头。
+   poll()：查询并移除第一个元素     特有方法
+
+   查：
+   get(int index)：按照下标获取元素；  通用方法
+   getFirst()：获取第一个元素；  特有方法
+   getLast()：获取最后一个元素； 特有方法
+   peek()：获取第一个元素，但是不移除；  特有方法
+   peekFirst()：获取第一个元素，但是不移除；
+   peekLast()：获取最后一个元素，但是不移除；
+   pollFirst()：查询并删除头；  特有方法
+   pollLast()：删除尾；  特有方法
+   poll()：查询并移除第一个元素     特有方法
+
